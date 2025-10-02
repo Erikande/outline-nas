@@ -1,7 +1,8 @@
-name: commitlint
+name: Commitlint
 on:
   pull_request:
     types: [opened, synchronize, edited, reopened]
+  workflow_dispatch:
 jobs:
   lint:
     runs-on: ubuntu-latest
