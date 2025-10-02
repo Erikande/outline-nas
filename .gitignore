@@ -16,3 +16,7 @@ pnpm-debug.log
 
 # Data/volumes
 storage/
+
+# Local Docker volumes
+/db/
+/redis/
