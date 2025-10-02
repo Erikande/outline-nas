@@ -1,0 +1,15 @@
+name: Jules Checks
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+jobs:
+  jules:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Replace with official Jules action when ready.
+      # - uses: jules-ai/action@vX
+      #   with:
+      #     token: ${{ secrets.JULES_TOKEN }}
