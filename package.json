@@ -1,0 +1,32 @@
+{
+  "name": "outline-nas",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@9.0.0",
+  "type": "module",
+  "scripts": {
+    "prepare": "husky",
+    "lint": "eslint . --ext .js,.cjs,.mjs,.ts,.tsx --max-warnings=0 || true",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "commit": "cz"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.4.0",
+    "@commitlint/config-conventional": "^19.4.0",
+    "commitizen": "^4.3.0",
+    "cz-git": "^1.9.0",
+    "eslint": "^9.9.0",
+    "husky": "^9.0.0",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.3.0"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,cjs,mjs,json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
+  "config": {
+    "commitizen": { "path": "cz-git" }
+  }
+}
