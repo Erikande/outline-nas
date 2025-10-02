@@ -62,6 +62,7 @@ Add the provided files from the **starter bundle** (in this repository’s root)
 
 **Warp tips**  
 Add these aliases to `~/.zshrc` (optional):
+
 ```sh
 alias gc="pnpm commit"
 alias gcm="git commit -m"
@@ -73,11 +74,13 @@ alias gpom="git push origin main"
 ## 4) Outline Stack (MVP)
 
 `docker-compose-outline.yml`:
+
 - Services: **outline**, **postgres**, **redis**
 - Volumes mapped to local directories (which, in prod, will be NAS paths)
 - Ports: `3000:3000`
 
 ### Environment files
+
 - `.env.example` — local dev defaults
 - `.env.prod.example` — prod hints (copy to `.env.prod` on the NAS only)
 
@@ -88,20 +91,24 @@ alias gpom="git push origin main"
 ## 5) Dev → Prod (NAS) Promotion Model
 
 **Branches**
+
 - `main` is **deployable**.
 - Features on `feat/*` (or `fix/*`) → PR → CI must pass → squash-merge to `main`.
 
 **Dev (local)**
+
 1. `cp .env.example .env` → edit as needed (secrets can be temporary).
 2. Run: `docker compose -f docker-compose-outline.yml up -d`
 3. Visit: http://localhost:3000
 
 **Prod (NAS)**
+
 1. Clone repo on NAS at `/volume1/Docker/outline`.
 2. On NAS only: `cp .env.prod.example .env.prod` and edit real secrets/hostnames.
 3. Deploy: `scripts/deploy-prod.sh` (uses `.env.prod`).
 
 Access:
+
 - **LAN**: `http://<NAS-LAN-IP>:3000`
 - **Tailscale/MagicDNS**: `http://outline-nas.tailnet-xyz.ts.net:3000` (example)
 
@@ -110,6 +117,7 @@ Access:
 ## 6) NFS over Tailscale (Local Mount for Editing)
 
 Use the helper scripts:
+
 - `scripts/mount-outline.sh` — mounts NAS Outline data to `~/nas-outline`.
 - `scripts/unmount-outline.sh` — unmounts safely.
 
@@ -117,6 +125,7 @@ These include **Raycast metadata** so you can invoke them as Raycast scripts.
 
 **Auto-mount on login (optional)**  
 Install `~/Library/LaunchAgents/com.heather.mount-outline.plist` and load with:
+
 ```bash
 launchctl load -w ~/Library/LaunchAgents/com.heather.mount-outline.plist
 ```
@@ -160,6 +169,7 @@ git commit -m "feat(repo): scene 1 bootstrap with infra, tooling, and dev→prod
 ```
 
 **Branch protection (GitHub → Settings → Branches → main)**
+
 - Require PR before merge, status checks, (optional) linear history.
 
 ---
