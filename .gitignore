@@ -20,3 +20,7 @@ storage/
 # Local Docker volumes
 /db/
 /redis/
+
+# Local runtime
+.env
+.env.*
