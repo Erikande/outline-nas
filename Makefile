@@ -1,6 +1,5 @@
 COMPOSE ?= docker-compose-outline.yml
 ENV ?= .env
-
 ps:        ; docker compose -f $(COMPOSE) --env-file $(ENV) ps
 up:        ; docker compose -f $(COMPOSE) --env-file $(ENV) up -d
 down:      ; docker compose -f $(COMPOSE) --env-file $(ENV) down
