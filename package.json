@@ -27,6 +27,8 @@
     ]
   },
   "config": {
-    "commitizen": { "path": "cz-git" }
+    "commitizen": {
+      "path": "cz-git"
+    }
   }
 }
