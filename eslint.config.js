@@ -2,11 +2,11 @@ import globals from 'globals'
 
 export default [
   {
-    files: ["**/*.js", "**/*.ts"],
+    files: ['**/*.js', '**/*.ts'],
     languageOptions: { globals: { ...globals.node } },
     rules: {
       'no-unused-vars': 'warn',
-      'no-undef': 'error'
-    }
-  }
+      'no-undef': 'error',
+    },
+  },
 ]

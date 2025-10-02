@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 
 services:
   outline:
@@ -9,7 +9,7 @@ services:
       - postgres
       - redis
     ports:
-      - "3000:3000"
+      - '3000:3000'
     volumes:
       - ./storage:/var/lib/outline/data
 
