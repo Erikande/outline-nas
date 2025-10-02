@@ -29,6 +29,66 @@
   "config": {
     "commitizen": {
       "path": "cz-git"
+    },
+    "cz-git": {
+      "scopes": [
+        "ops",
+        "docs",
+        "ci",
+        "jules",
+        "dev",
+        "prod",
+        "scripts",
+        "compose",
+        "infra",
+        "deps"
+      ],
+      "types": [
+        {
+          "value": "feat",
+          "name": "feat:     a new feature"
+        },
+        {
+          "value": "fix",
+          "name": "fix:      a bug fix"
+        },
+        {
+          "value": "docs",
+          "name": "docs:     documentation only"
+        },
+        {
+          "value": "style",
+          "name": "style:    code style (no logic)"
+        },
+        {
+          "value": "refactor",
+          "name": "refactor: code refactor (no fix/feat)"
+        },
+        {
+          "value": "perf",
+          "name": "perf:     performance improvement"
+        },
+        {
+          "value": "test",
+          "name": "test:     add/update tests"
+        },
+        {
+          "value": "build",
+          "name": "build:    build system or deps"
+        },
+        {
+          "value": "ci",
+          "name": "ci:       CI config or scripts"
+        },
+        {
+          "value": "chore",
+          "name": "chore:    maintenance tasks"
+        },
+        {
+          "value": "revert",
+          "name": "revert:   revert a previous commit"
+        }
+      ]
     }
   }
 }

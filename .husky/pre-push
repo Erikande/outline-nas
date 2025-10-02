@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+branch="$(git rev-parse --abbrev-ref HEAD)"
+# allow main & release tags, else require type/<desc>
+if [[ "$branch" == "main" || "$branch" =~ ^release\/.+$ ]]; then
+  exit 0
+fi
+if [[ ! "$branch" =~ ^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)\/[a-z0-9._-]+$ ]]; then
+  echo "✖ Branch name '$branch' is invalid."
+  echo "  Use: <type>/<kebab-or-dots>  e.g., feat/ops-makefile-helpers"
+  exit 1
+fi
