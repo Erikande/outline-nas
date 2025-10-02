@@ -2,6 +2,7 @@ name: Jules Checks
 
 on:
   pull_request:
+<<<<<<< HEAD
     types: [opened, synchronize, edited, reopened]
   workflow_dispatch:
 
@@ -14,6 +15,11 @@ concurrency:
   group: jules-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: false
 
+=======
+    branches: [main]
+  push:
+    branches: [main]
+>>>>>>> dbced92 (style(infra): format repository to satisfy CI)
 jobs:
   jules:
     runs-on: ubuntu-latest
