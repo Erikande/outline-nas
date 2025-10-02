@@ -29,6 +29,20 @@
   "config": {
     "commitizen": {
       "path": "cz-git"
+    },
+    "cz-git": {
+      "scopes": [
+        "ops",
+        "docs",
+        "ci",
+        "jules",
+        "dev",
+        "prod",
+        "scripts",
+        "compose",
+        "infra",
+        "deps"
+      ]
     }
   }
 }
