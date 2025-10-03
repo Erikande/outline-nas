@@ -85,11 +85,11 @@ This will show you the real-time output from the `outline`, `postgres`, and `red
 
 - **Symptom**: When attempting to connect via `tailscale ssh`, the connection is rejected with an error related to user lookup.
 - **Likely Cause**:
-    1. The user you are trying to connect as (e.g., `admin`) does not exist on the host or is not permitted by your Tailscale ACLs.
-    2. You are connecting to the sandboxed Tailscale environment which has a different set of users.
+  1. The user you are trying to connect as (e.g., `admin`) does not exist on the host or is not permitted by your Tailscale ACLs.
+  2. You are connecting to the sandboxed Tailscale environment which has a different set of users.
 - **Fix**:
-    1.  Verify the `ssh` section of your Tailscale ACLs correctly lists the `users` you want to allow.
-    2.  When in doubt, bypass Tailscale SSH and use the host sshd service on the LAN IP.
+  1.  Verify the `ssh` section of your Tailscale ACLs correctly lists the `users` you want to allow.
+  2.  When in doubt, bypass Tailscale SSH and use the host sshd service on the LAN IP.
 
 ---
 

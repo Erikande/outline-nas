@@ -39,9 +39,9 @@ The production environment lives on the NAS. All detailed setup steps are in the
 
 This table outlines the expected access methods for each environment.
 
-| Environment | UI Access                                            | Shell Access                                                              |
-| :---------- | :--------------------------------------------------- | :------------------------------------------------------------------------ |
-| **Dev**     | `http://localhost:3000` (HTTP)                       | Local terminal only.                                                      |
+| Environment | UI Access                                       | Shell Access                                                                |
+| :---------- | :---------------------------------------------- | :-------------------------------------------------------------------------- |
+| **Dev**     | `http://localhost:3000` (HTTP)                  | Local terminal only.                                                        |
 | **Prod**    | MagicDNS `https://<hostname>.<tailnet>` (HTTPS) | Host sshd on LAN IP. See [NAS SSH Access Guide](./NAS_SSH_ACCESS_GUIDE.md). |
 
 _Note: The production HTTPS endpoint via Tailscale is a goal for Scene 4. For now, access is via the host IP._
