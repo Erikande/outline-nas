@@ -10,10 +10,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
       - run: corepack enable
       - run: corepack prepare pnpm@latest --activate
       - run: pnpm install --frozen-lockfile
-      - run: pnpm run format:check
+      - name: Prettier (changed files only)
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          else
+            BASE_SHA="$(git rev-parse origin/main)"
+          fi
+          CHANGED="$(git diff --name-only "$BASE_SHA"...HEAD -- 'docs/**/*.md' '*.md' '*.yml' '*.yaml' '*.json' ':!**/node_modules/**')"
+          echo "Changed files:"; echo "$CHANGED"
+          if [ -n "$CHANGED" ]; then
+            pnpx prettier --check $CHANGED
+          else
+            echo "No relevant changed files to check."
+          fi

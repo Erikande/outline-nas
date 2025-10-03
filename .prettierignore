@@ -1,3 +1,10 @@
 node_modules
-storage
-.DS_Store
+dist
+build
+.turbo
+db/
+redis/
+storage/
+_nas_shared_backups/
+backup_reports/
+rclone/rclone.conf
