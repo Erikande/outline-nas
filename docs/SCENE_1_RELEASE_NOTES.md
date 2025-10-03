@@ -28,3 +28,4 @@ Installation and deployment procedures are captured in the canonical bootstrap g
 ## What’s Next
 
 Scene 2 will build upon this foundation by enhancing robustness and automation. The focus will shift to implementing a comprehensive backup strategy for the database and file uploads, deploying an optional Caddy reverse proxy for cleaner internal networking, and potentially automating deployments based on Git tags.
+test
