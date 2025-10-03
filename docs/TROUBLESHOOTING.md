@@ -66,3 +66,42 @@ This will show you the real-time output from the `outline`, `postgres`, and `red
   1.  Check the service status with `make ps` and inspect the logs with `make logs` to see why the `outline` service might be failing.
   2.  Verify that your `.env` file contains the correct values for `POSTGRES_USER`, `POSTGRES_PASSWORD`, and `POSTGRES_DB`.
   3.  Ensure no firewall or proxy is blocking local network traffic on port 3000.
+
+---
+
+### Symptom: "I created folders in SSH but ADM doesn’t show them." (NAS)
+
+- **Symptom**: You connect to the NAS via SSH, create directories (e.g., `/volume1/Docker/outline`), but they do not appear in the ADM File Explorer web UI.
+- **Likely Cause**: You have connected to the **Tailscale Alpine sandbox**, not the host OS. Changes made in this sandboxed session are not reflected on the host filesystem.
+- **Fix**:
+  1.  Connect to the NAS using the **host sshd service** on its LAN IP: `ssh admin@<LAN-IP>`.
+  2.  Re-create the directories on the host.
+  3.  If ADM is still not showing the new folders, its cache may be stale. Force a refresh by creating a beacon file: `touch /volume1/Docker/.refresh_me`.
+  4.  For more details, see the **[NAS SSH Access Guide](./NAS_SSH_ACCESS_GUIDE.md)**.
+
+---
+
+### Symptom: "tailscale: failed to look up local user..." (NAS)
+
+- **Symptom**: When attempting to connect via `tailscale ssh`, the connection is rejected with an error related to user lookup.
+- **Likely Cause**:
+    1. The user you are trying to connect as (e.g., `admin`) does not exist on the host or is not permitted by your Tailscale ACLs.
+    2. You are connecting to the sandboxed Tailscale environment which has a different set of users.
+- **Fix**:
+    1.  Verify the `ssh` section of your Tailscale ACLs correctly lists the `users` you want to allow.
+    2.  When in doubt, bypass Tailscale SSH and use the host sshd service on the LAN IP.
+
+---
+
+### Symptom: "Permission denied to Docker socket" (NAS)
+
+- **Symptom**: Running `docker` or `docker-compose` commands on the NAS fails with a permission error related to `/var/run/docker.sock`.
+- **Likely Cause**: The `admin` user is not a member of the `docker` group and therefore cannot access the Docker daemon.
+- **Fix**:
+  1.  Add the `admin` user to the `docker` group.
+      ```sh
+      # Run this on the NAS host shell
+      addgroup docker 2>/dev/null || true
+      adduser admin docker 2>/dev/null || gpasswd -a admin docker
+      ```
+  2.  **Log out and log back in** for the new group membership to take effect.

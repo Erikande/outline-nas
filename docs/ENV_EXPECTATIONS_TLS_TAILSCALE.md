@@ -39,6 +39,8 @@ Defines how Outline is accessed in each environment and the required HTTPS story
 - Browser origin: `https://outline.tailnet-name.ts.net` (Tailscale MagicDNS), **TLS required**.
 - Only accessible from devices on the tailnet.
 
+> **Note on Administrative Access:** Application access (HTTPS via MagicDNS) is distinct from administrative shell access (SSH). For filesystem changes on the NAS, always use the host's LAN-based SSH service to avoid sandboxing issues. For complete details, see the **[NAS SSH Access Guide](./NAS_SSH_ACCESS_GUIDE.md)**.
+
 **Must**
 
 - `URL=https://outline.tailnet-name.ts.net` (app's URL must equal the browser origin).

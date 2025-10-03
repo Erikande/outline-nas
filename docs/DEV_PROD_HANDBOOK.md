@@ -35,6 +35,17 @@ The production environment lives on the NAS. All detailed setup steps are in the
 - **Repo Path**: `/volume1/Docker/outline`
 - **Environment File**: `/volume1/Docker/outline/.env.prod` (This file must be created manually on the NAS and should never be committed to the repository).
 
+## Access & TLS Expectations
+
+This table outlines the expected access methods for each environment.
+
+| Environment | UI Access                                            | Shell Access                                                              |
+| :---------- | :--------------------------------------------------- | :------------------------------------------------------------------------ |
+| **Dev**     | `http://localhost:3000` (HTTP)                       | Local terminal only.                                                      |
+| **Prod**    | MagicDNS `https://<hostname>.<tailnet>` (HTTPS) | Host sshd on LAN IP. See [NAS SSH Access Guide](./NAS_SSH_ACCESS_GUIDE.md). |
+
+_Note: The production HTTPS endpoint via Tailscale is a goal for Scene 4. For now, access is via the host IP._
+
 ## Makefile Reference
 
 The `Makefile` provides convenient shortcuts for common operations.
