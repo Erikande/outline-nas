@@ -1,15 +1,87 @@
 name: Jules Checks
+
 on:
   pull_request:
-    branches: [main]
-  push:
-    branches: [main]
+    types: [opened, synchronize, edited, reopened]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  checks: write
+  pull-requests: write
+
+concurrency:
+  group: jules-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: false
+
 jobs:
   jules:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      # Replace with official Jules action when ready.
-      # - uses: jules-ai/action@vX
-      #   with:
-      #     token: ${{ secrets.JULES_TOKEN }}
+      - name: Checkout PR head
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+
+      # 1) Start a stable check run called "jules"
+      - name: Start Jules check
+        id: start
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const head = (context.payload.pull_request && context.payload.pull_request.head.sha) || context.sha;
+            const { data: check } = await github.rest.checks.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: 'jules',
+              head_sha: head,
+              status: 'in_progress'
+            });
+            core.setOutput('id', check.id);
+
+      # 2) Do your real validations here (add/keep anything you like)
+      - name: Summarize PR diff
+        run: |
+          echo "PR #${{ github.event.number || 'manual' }}" > jules_summary.txt
+          echo "Base: ${{ github.event.pull_request.base.sha || 'N/A' }}" >> jules_summary.txt
+          echo "Head: ${{ github.event.pull_request.head.sha || github.sha }}" >> jules_summary.txt
+          echo "" >> jules_summary.txt
+          echo "Changed files:" >> jules_summary.txt
+          if [ -n "${{ github.event.pull_request.base.sha || '' }}" ]; then
+            git diff --name-status ${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }} >> jules_summary.txt
+          else
+            git ls-files >> jules_summary.txt
+          fi
+
+      - name: Optional local verify
+        run: |
+          if [ -x scripts/verify-dev.sh ]; then
+            bash scripts/verify-dev.sh
+          else
+            echo "No scripts/verify-dev.sh; skipping."
+          fi
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: jules-pr-${{ github.event.number || 'manual' }}
+          path: |
+            jules_summary.txt
+            .jules/**/*
+
+      # 3) Always complete the stable check with success/failure
+      - name: Complete Jules check
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const conclusion = '${{ job.status }}' === 'success' ? 'success' : 'failure';
+            await github.rest.checks.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              check_run_id: Number('${{ steps.start.outputs.id }}'),
+              status: 'completed',
+              conclusion
+            });
