@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
+# In CI, if .env is missing, clone from example so basic checks can run
+if [[ ! -f "${ENV_FILE}" && -f .env.example ]]; then
+  cp .env.example "${ENV_FILE}"
+fi
+# In CI, if .env is missing, clone from example so we can run basic checks
+if [[ ! -f "${ENV_FILE}" && -f .env.example ]]; then
+  cp .env.example "${ENV_FILE}"
+fi
 COMPOSE_FILE="${COMPOSE_FILE:-docker-compose-outline.yml}"
 ENV_FILE="${ENV_FILE:-.env}"
 APP_URL="${APP_URL:-http://localhost:3000}"
