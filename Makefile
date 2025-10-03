@@ -27,3 +27,5 @@ health: ## Probe http://localhost:3000
 
 verify: ## Run local verification (env parity, compose config, HTTP)
 	COMPOSE_FILE=$(COMPOSE) ENV_FILE=$(ENV) APP_URL=$(APP_URL) bash scripts/verify-dev.sh
+
+# noop sanity 18:59:39
