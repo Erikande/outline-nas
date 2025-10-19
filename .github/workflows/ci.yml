@@ -1,9 +1,12 @@
-name: CI
+name: repo-ci
+
 on:
   pull_request:
+    types: [opened, synchronize, reopened, edited, ready_for_review]
+  workflow_dispatch:
   push:
     branches: [main]
-  workflow_dispatch:
+
 jobs:
   repo-ci:
     runs-on: ubuntu-latest
@@ -16,3 +19,29 @@ jobs:
       - run: corepack prepare pnpm@latest --activate
       - run: pnpm install --frozen-lockfile
       - run: pnpm run format:check
+
+  backups-ci:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: corepack enable
+      - run: corepack prepare pnpm@latest --activate
+      - run: pnpm install --frozen-lockfile
+
+      - name: Backups dry-run
+  run: |
+    mkdir -p backups/{rclone,cache,_local_dest,artifacts}
+    printf "[local]\ntype = local\n" > backups/rclone/rclone.conf
+    docker compose -f docker-compose-backups.yml run --rm \
+      -e MODE=--dry-run rclone || true
+
+      - name: Upload backup report
+        uses: actions/upload-artifact@v4
+        with:
+          name: backup_reports
+          path: backups/artifacts/*.log
+          if-no-files-found: ignore
