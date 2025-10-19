@@ -12,3 +12,9 @@ backups/artifacts/
 /storage/
 backups/
 !backups/.keep
+# OS
+.DS_Store
+# Node
+node_modules/
+pnpm-debug.log
+# Backups
