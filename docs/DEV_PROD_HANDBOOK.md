@@ -1,5 +1,7 @@
 # Dev & Prod Handbook (Scene 1)
 
+> See `docs/SCENE_LEDGER.md` for the current Scene focus (backups scaffold + CI dry-run).
+
 This handbook is the practical guide for developers working on the Outline stack. It covers local setup, production environment details, and the tools that govern the development workflow.
 
 ## Local Quickstart

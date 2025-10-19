@@ -1,0 +1,15 @@
+services:
+  rclone:
+    image: rclone/rclone:latest
+    working_dir: /work
+    volumes:
+      - .:/work:rw
+      - ./backups/cache:/root/.cache/rclone
+    entrypoint: /bin/sh
+    command: ['-lc', '/work/scripts/backup-run.sh ${MODE:---dry-run}']
+    environment:
+      BACKUP_SRC: /work/storage
+      BACKUP_REMOTE: ${BACKUP_REMOTE:-local}
+      BACKUP_DEST: ${BACKUP_DEST:-/work/backups/_local_dest}
+      RCLONE_CONFIG_FILE: ${RCLONE_CONFIG_FILE:-/work/backups/rclone/rclone.conf}
+      RCLONE_FLAGS: ${RCLONE_FLAGS:---fast-list --transfers=2 --checkers=4 --stats=15s}

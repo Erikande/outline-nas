@@ -24,3 +24,12 @@ storage/
 # Local runtime
 .env
 .env.*
+backups/cache/
+backups/_local_dest/
+backups/artifacts/
+# Local container mounts / artifacts
+db/
+redis/
+uploads/
+backups/
+!backups/.keep

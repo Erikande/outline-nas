@@ -27,15 +27,3 @@ health: ## Probe http://localhost:3000
 
 verify: ## Run local verification (env parity, compose config, HTTP)
 	COMPOSE_FILE=$(COMPOSE) ENV_FILE=$(ENV) APP_URL=$(APP_URL) bash scripts/verify-dev.sh
-backup.dry-run:
-	@docker compose -f docker-compose-backups.yml run --rm \
-	  -e BACKUP_SRC -e BACKUP_REMOTE -e BACKUP_DEST -e RCLONE_FLAGS -e RCLONE_CONFIG_FILE \
-	  rclone /bin/sh -lc "./scripts/backup-run.sh --dry-run"
-
-backup.once:
-	@docker compose -f docker-compose-backups.yml run --rm \
-	  -e BACKUP_SRC -e BACKUP_REMOTE -e BACKUP_DEST -e RCLONE_FLAGS -e RCLONE_CONFIG_FILE \
-	  rclone /bin/sh -lc "./scripts/backup-run.sh --once"
-
-backup.logs:
-	@ls -1t backups/artifacts 2>/dev/null | head -n 5 || echo "(no artifacts yet)"
