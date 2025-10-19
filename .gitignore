@@ -24,3 +24,6 @@ storage/
 # Local runtime
 .env
 .env.*
+backups/cache/
+backups/_local_dest/
+backups/artifacts/
