@@ -1,29 +1,14 @@
-# OS
-.DS_Store
-
-# Node
-node_modules/
-pnpm-debug.log
-
-# Env (keep only examples tracked)
-.env
-.env.local
-.env.development
-.env.production
-.env.*
-!.env.example
-!.env.prod.example
-
-# Data/volumes
-storage/
-
-# Local Docker volumes
-/db/
-/redis/
-
 # Local runtime
 .env
 .env.*
 backups/cache/
 backups/_local_dest/
 backups/artifacts/
+
+# Local container mounts / artifacts
+/db/
+/redis/
+/uploads/
+/storage/
+backups/
+!backups/.keep
